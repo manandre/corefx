@@ -24,6 +24,7 @@
     <Compile Include="Blocks\BroadcastBlock.cs" />
     <Compile Include="Blocks\BufferBlock.cs" />
     <Compile Include="Blocks\JoinBlock.cs" />
+    <Compile Include="Blocks\JoinManyBlock.cs" />
     <Compile Include="Blocks\TransformBlock.cs" />
     <Compile Include="Blocks\TransformManyBlock.cs" />
     <Compile Include="Blocks\WriteOnceBlock.cs" />

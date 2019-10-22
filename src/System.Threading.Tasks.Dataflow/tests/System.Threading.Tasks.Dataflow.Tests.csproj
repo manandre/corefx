@@ -17,6 +17,7 @@
     <Compile Include="Dataflow\DelegateBasedMocks.cs" />
     <Compile Include="Dataflow\EtwTests.cs" />
     <Compile Include="Dataflow\JoinBlockTests.cs" />
+    <Compile Include="Dataflow\JoinManyBlockTests.cs" />
     <Compile Include="Dataflow\SimpleNetworkTests.cs" />
     <Compile Include="Dataflow\TransformBlockTests.cs" />
     <Compile Include="Dataflow\TransformManyBlockTests.cs" />

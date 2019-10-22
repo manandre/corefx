@@ -252,6 +252,23 @@ namespace System.Threading.Tasks.Dataflow
         public bool TryReceive(System.Predicate<System.Tuple<T1, T2, T3>> filter, out System.Tuple<T1, T2, T3> item) { throw null; }
         public bool TryReceiveAll(out System.Collections.Generic.IList<System.Tuple<T1, T2, T3>> items) { throw null; }
     }
+    public sealed partial class JoinManyBlock<T> : System.Threading.Tasks.Dataflow.IDataflowBlock, System.Threading.Tasks.Dataflow.IReceivableSourceBlock<T[]>, System.Threading.Tasks.Dataflow.ISourceBlock<T[]>
+    {
+        public JoinManyBlock(int joinNumber) { }
+        public JoinManyBlock(int joinNumber, System.Threading.Tasks.Dataflow.GroupingDataflowBlockOptions dataflowBlockOptions) { }
+        public System.Threading.Tasks.Task Completion { get { throw null; } }
+        public int OutputCount { get { throw null; } }
+        public System.Threading.Tasks.Dataflow.ITargetBlock<T>[] Targets { get { throw null; } }
+        public void Complete() { }
+        public System.IDisposable LinkTo(System.Threading.Tasks.Dataflow.ITargetBlock<T[]> target, System.Threading.Tasks.Dataflow.DataflowLinkOptions linkOptions) { throw null; }
+        void System.Threading.Tasks.Dataflow.IDataflowBlock.Fault(System.Exception exception) { }
+        T[] System.Threading.Tasks.Dataflow.ISourceBlock<T[]>.ConsumeMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader messageHeader, System.Threading.Tasks.Dataflow.ITargetBlock<T[]> target, out bool messageConsumed) { throw null; }
+        void System.Threading.Tasks.Dataflow.ISourceBlock<T[]>.ReleaseReservation(System.Threading.Tasks.Dataflow.DataflowMessageHeader messageHeader, System.Threading.Tasks.Dataflow.ITargetBlock<T[]> target) { }
+        bool System.Threading.Tasks.Dataflow.ISourceBlock<T[]>.ReserveMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader messageHeader, System.Threading.Tasks.Dataflow.ITargetBlock<T[]> target) { throw null; }
+        public override string ToString() { throw null; }
+        public bool TryReceive(System.Predicate<T[]> filter, out T[] item) { throw null; }
+        public bool TryReceiveAll(out System.Collections.Generic.IList<T[]> items) { throw null; }
+    }
     public sealed partial class TransformBlock<TInput, TOutput> : System.Threading.Tasks.Dataflow.IDataflowBlock, System.Threading.Tasks.Dataflow.IPropagatorBlock<TInput, TOutput>, System.Threading.Tasks.Dataflow.IReceivableSourceBlock<TOutput>, System.Threading.Tasks.Dataflow.ISourceBlock<TOutput>, System.Threading.Tasks.Dataflow.ITargetBlock<TInput>
     {
         public TransformBlock(System.Func<TInput, System.Threading.Tasks.Task<TOutput>> transform) { }
