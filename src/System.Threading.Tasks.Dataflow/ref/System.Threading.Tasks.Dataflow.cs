@@ -79,6 +79,24 @@ namespace System.Threading.Tasks.Dataflow
         public bool TryReceive(System.Predicate<System.Tuple<System.Collections.Generic.IList<T1>, System.Collections.Generic.IList<T2>, System.Collections.Generic.IList<T3>>> filter, out System.Tuple<System.Collections.Generic.IList<T1>, System.Collections.Generic.IList<T2>, System.Collections.Generic.IList<T3>> item) { throw null; }
         public bool TryReceiveAll(out System.Collections.Generic.IList<System.Tuple<System.Collections.Generic.IList<T1>, System.Collections.Generic.IList<T2>, System.Collections.Generic.IList<T3>>> items) { throw null; }
     }
+    public sealed partial class BatchedJoinManyBlock<T> : System.Threading.Tasks.Dataflow.IDataflowBlock, System.Threading.Tasks.Dataflow.IReceivableSourceBlock<System.Collections.Generic.IList<T>[]>, System.Threading.Tasks.Dataflow.ISourceBlock<System.Collections.Generic.IList<T>[]>
+    {
+        public BatchedJoinManyBlock(int batchSize, int joinNumber) { }
+        public BatchedJoinManyBlock(int batchSize, int joinNumber, System.Threading.Tasks.Dataflow.GroupingDataflowBlockOptions dataflowBlockOptions) { }
+        public int BatchSize { get { throw null; } }
+        public System.Threading.Tasks.Task Completion { get { throw null; } }
+        public int OutputCount { get { throw null; } }
+        public System.Threading.Tasks.Dataflow.ITargetBlock<T>[] Targets { get { throw null; } }
+        public void Complete() { }
+        public System.IDisposable LinkTo(System.Threading.Tasks.Dataflow.ITargetBlock<System.Collections.Generic.IList<T>[]> target, System.Threading.Tasks.Dataflow.DataflowLinkOptions linkOptions) { throw null; }
+        void System.Threading.Tasks.Dataflow.IDataflowBlock.Fault(System.Exception exception) { }
+        System.Collections.Generic.IList<T>[] System.Threading.Tasks.Dataflow.ISourceBlock<System.Collections.Generic.IList<T>[]>.ConsumeMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader messageHeader, System.Threading.Tasks.Dataflow.ITargetBlock<System.Collections.Generic.IList<T>[]> target, out bool messageConsumed) { throw null; }
+        void System.Threading.Tasks.Dataflow.ISourceBlock<System.Collections.Generic.IList<T>[]>.ReleaseReservation(System.Threading.Tasks.Dataflow.DataflowMessageHeader messageHeader, System.Threading.Tasks.Dataflow.ITargetBlock<System.Collections.Generic.IList<T>[]> target) { }
+        bool System.Threading.Tasks.Dataflow.ISourceBlock<System.Collections.Generic.IList<T>[]>.ReserveMessage(System.Threading.Tasks.Dataflow.DataflowMessageHeader messageHeader, System.Threading.Tasks.Dataflow.ITargetBlock<System.Collections.Generic.IList<T>[]> target) { throw null; }
+        public override string ToString() { throw null; }
+        public bool TryReceive(System.Predicate<System.Collections.Generic.IList<T>[]> filter, out System.Collections.Generic.IList<T>[] item) { throw null; }
+        public bool TryReceiveAll(out System.Collections.Generic.IList<System.Collections.Generic.IList<T>[]> items) { throw null; }
+    }
     public sealed partial class BroadcastBlock<T> : System.Threading.Tasks.Dataflow.IDataflowBlock, System.Threading.Tasks.Dataflow.IPropagatorBlock<T, T>, System.Threading.Tasks.Dataflow.IReceivableSourceBlock<T>, System.Threading.Tasks.Dataflow.ISourceBlock<T>, System.Threading.Tasks.Dataflow.ITargetBlock<T>
     {
         public BroadcastBlock(System.Func<T, T> cloningFunction) { }

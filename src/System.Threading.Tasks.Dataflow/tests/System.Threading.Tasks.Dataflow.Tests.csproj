@@ -7,6 +7,7 @@
     <Compile Include="Dataflow\ActionBlockTests.cs" />
     <Compile Include="Dataflow\BatchBlockTests.cs" />
     <Compile Include="Dataflow\BatchedJoinBlockTests.cs" />
+    <Compile Include="Dataflow\BatchedJoinManyBlockTests.cs" />
     <Compile Include="Dataflow\BroadcastBlockTests.cs" />
     <Compile Include="Dataflow\BufferBlockTests.cs" />
     <Compile Include="Dataflow\ConcurrentTests.cs" />

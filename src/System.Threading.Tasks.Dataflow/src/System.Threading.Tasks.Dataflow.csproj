@@ -21,6 +21,7 @@
     <Compile Include="Blocks\ActionBlock.cs" />
     <Compile Include="Blocks\BatchBlock.cs" />
     <Compile Include="Blocks\BatchedJoinBlock.cs" />
+    <Compile Include="Blocks\BatchedJoinManyBlock.cs" />
     <Compile Include="Blocks\BroadcastBlock.cs" />
     <Compile Include="Blocks\BufferBlock.cs" />
     <Compile Include="Blocks\JoinBlock.cs" />
