@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <IncludeRemoteExecutor>true</IncludeRemoteExecutor>
-    <Configurations>netcoreapp-Debug;netcoreapp-Release;netfx-Debug;netfx-Release;uap-Debug;uap-Release</Configurations>
+    <Configurations>netcoreapp-Debug;netcoreapp-Release;netcoreapp3.0-Debug;netcoreapp3.0-Release;netfx-Debug;netfx-Release;uap-Debug;uap-Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Dataflow\ActionBlockTests.cs" />
@@ -13,6 +13,7 @@
     <Compile Include="Dataflow\DataflowBlockExtensionTests.cs" />
     <Compile Include="Dataflow\DataflowBlockOptionsTests.cs" />
     <Compile Include="Dataflow\DataflowTestHelper.cs" />
+    <Compile Include="Dataflow\DataflowTestHelper.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Dataflow\DebugAttributeTests.cs" />
     <Compile Include="Dataflow\DelegateBasedMocks.cs" />
     <Compile Include="Dataflow\EtwTests.cs" />
@@ -20,6 +21,7 @@
     <Compile Include="Dataflow\SimpleNetworkTests.cs" />
     <Compile Include="Dataflow\TransformBlockTests.cs" />
     <Compile Include="Dataflow\TransformManyBlockTests.cs" />
+    <Compile Include="Dataflow\TransformManyBlockTests.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Dataflow\WriteOnceBlockTests.cs" />
     <Compile Include="$(CommonTestPath)\System\Diagnostics\Tracing\TestEventListener.cs">
       <Link>Common\System\Diagnostics\Tracing\TestEventListener.cs</Link>
