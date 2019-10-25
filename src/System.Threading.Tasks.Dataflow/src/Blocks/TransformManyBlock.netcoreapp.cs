@@ -44,31 +44,5 @@ namespace System.Threading.Tasks.Dataflow
         {
             if (transform == null) throw new ArgumentNullException(nameof(transform));
         }
-
-        /// <summary>Initializes the <see cref="TransformManyBlock{TInput,TOutput}"/> with the specified function.</summary>
-        /// <param name="transform">
-        /// The function to invoke with each data element received. All of the data asynchronously returned in the <see cref="System.Collections.Generic.IAsyncEnumerable{TOutput}"/>
-        /// will be made available as output from this <see cref="TransformManyBlock{TInput,TOutput}"/>.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">The <paramref name="transform"/> is null (Nothing in Visual Basic).</exception>
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public TransformManyBlock(Func<TInput, Task<IAsyncEnumerable<TOutput>>> transform) :
-            this(transform, ExecutionDataflowBlockOptions.Default)
-        { }
-
-        /// <summary>Initializes the <see cref="TransformManyBlock{TInput,TOutput}"/> with the specified function and <see cref="ExecutionDataflowBlockOptions"/>.</summary>
-        /// <param name="transform">
-        /// The function to invoke with each data element received. All of the data asynchronously returned in the <see cref="System.Collections.Generic.IAsyncEnumerable{TOutput}"/>
-        /// will be made available as output from this <see cref="TransformManyBlock{TInput,TOutput}"/>.
-        /// </param>
-        /// <param name="dataflowBlockOptions">The options with which to configure this <see cref="TransformManyBlock{TInput,TOutput}"/>.</param>
-        /// <exception cref="System.ArgumentNullException">The <paramref name="transform"/> is null (Nothing in Visual Basic).</exception>
-        /// <exception cref="System.ArgumentNullException">The <paramref name="dataflowBlockOptions"/> is null (Nothing in Visual Basic).</exception>
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public TransformManyBlock(Func<TInput, Task<IAsyncEnumerable<TOutput>>> transform, ExecutionDataflowBlockOptions dataflowBlockOptions) :
-            this(async t => (await (transform(t)?.ConfigureAwait(false) ?? Task.FromResult<IAsyncEnumerable<TOutput>>(null).ConfigureAwait(false)))?.ToEnumerable(), dataflowBlockOptions)
-        {
-            if (transform == null) throw new ArgumentNullException(nameof(transform));
-        }
     }
 }
