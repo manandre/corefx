@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Base\DataflowBlock.cs" />
+    <Compile Include="Base\DataflowBlock.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Base\DataflowBlockOptions.cs" />
     <Compile Include="Base\DataflowLinkOptions.cs" />
     <Compile Include="Base\DataflowMessageHeader.cs" />

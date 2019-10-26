@@ -7,6 +7,11 @@
 
 namespace System.Threading.Tasks.Dataflow
 {
+    public static partial class DataflowBlock
+    {
+        public static System.Collections.Generic.IAsyncEnumerable<TOutput> ReceiveAllAsync<TOutput>(this System.Threading.Tasks.Dataflow.ISourceBlock<TOutput> source, System.Threading.CancellationToken cancellationToken = default) { throw null; }    
+    }
+
     public sealed partial class TransformManyBlock<TInput, TOutput>
     {
         public TransformManyBlock(System.Func<TInput, System.Collections.Generic.IAsyncEnumerable<TOutput>> transform) { }

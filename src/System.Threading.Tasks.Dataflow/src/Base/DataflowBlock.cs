@@ -26,7 +26,7 @@ namespace System.Threading.Tasks.Dataflow
     /// <summary>
     /// Provides a set of static (Shared in Visual Basic) methods for working with dataflow blocks.
     /// </summary>
-    public static class DataflowBlock
+    public static partial class DataflowBlock
     {
         #region LinkTo
         /// <summary>Links the <see cref="ISourceBlock{TOutput}"/> to the specified <see cref="ITargetBlock{TOutput}"/>.</summary>
@@ -1462,6 +1462,7 @@ namespace System.Threading.Tasks.Dataflow
                 // If cancellation could be requested, hook everything up to be notified of cancellation requests.
                 if (cancellationToken.CanBeCanceled)
                 {
+                    target.CancellationToken = cancellationToken;
                     // When cancellation is requested, unlink the target from the source and cancel the target.
                     target._ctr = cancellationToken.Register(OutputAvailableAsyncTarget<TOutput>.s_cancelAndUnlink, target);
                 }
@@ -1525,7 +1526,7 @@ namespace System.Threading.Tasks.Dataflow
                 System.Threading.Tasks.Task.Factory.StartNew(tgt =>
                                                             {
                                                                 var thisTarget = (OutputAvailableAsyncTarget<T>)tgt;
-                                                                thisTarget.TrySetCanceled();
+                                                                thisTarget.TrySetCanceled(thisTarget.CancellationToken);
                                                                 thisTarget.AttemptThreadSafeUnlink();
                                                             },
                     target, CancellationToken.None, Common.GetCreationOptionsForTask(), TaskScheduler.Default);
@@ -1546,6 +1547,9 @@ namespace System.Threading.Tasks.Dataflow
             internal IDisposable _unlinker;
             /// <summary>The registration used to unregister this target from the cancellation token.</summary>
             internal CancellationTokenRegistration _ctr;
+
+            /// <summary>The cancellation token associated with this operation.</summary>
+            internal CancellationToken CancellationToken;
 
             /// <summary>Completes the task when offered a message (but doesn't consume the message).</summary>
             DataflowMessageStatus ITargetBlock<T>.OfferMessage(DataflowMessageHeader messageHeader, T messageValue, ISourceBlock<T> source, bool consumeToAccept)

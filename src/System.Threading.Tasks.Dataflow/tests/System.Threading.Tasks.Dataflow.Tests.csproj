@@ -11,6 +11,7 @@
     <Compile Include="Dataflow\BufferBlockTests.cs" />
     <Compile Include="Dataflow\ConcurrentTests.cs" />
     <Compile Include="Dataflow\DataflowBlockExtensionTests.cs" />
+    <Compile Include="Dataflow\DataflowBlockExtensionTests.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Dataflow\DataflowBlockOptionsTests.cs" />
     <Compile Include="Dataflow\DataflowTestHelper.cs" />
     <Compile Include="Dataflow\DataflowTestHelper.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />

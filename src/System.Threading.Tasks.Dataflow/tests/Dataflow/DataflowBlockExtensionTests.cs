@@ -9,7 +9,7 @@ using Xunit;
 
 namespace System.Threading.Tasks.Dataflow.Tests
 {
-    public class DataflowBlockExtensionsTests
+    public partial class DataflowBlockExtensionsTests
     {
         [Fact]
         public void TestDataflowMessageHeader()
