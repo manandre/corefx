@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>System.Threading.Tasks.Dataflow</RootNamespace>
-    <DefineConstants Condition="'$(TargetGroup)' == 'netstandard1.1' OR '$(TargetGroup)' == 'netstandard'">$(DefineConstants);FEATURE_TRACING</DefineConstants>
+    <DefineConstants Condition="'$(TargetGroup)' == 'netstandard1.1' OR '$(TargetGroup)' == 'netstandard' OR '$(TargetGroup)' == 'netcoreapp' OR '$(TargetGroup)' == 'netcoreapp3.0'">$(DefineConstants);FEATURE_TRACING</DefineConstants>
     <DefineConstants Condition="'$(TargetGroup)' == 'netstandard1.0'">$(DefineConstants);USE_INTERNAL_CONCURRENT_COLLECTIONS</DefineConstants>
     <DefineConstants Condition="'$(TargetGroup)' == 'netstandard1.0' OR '$(TargetGroup)' == 'netstandard1.1'">$(DefineConstants);USE_INTERNAL_THREADING</DefineConstants>
     <PackageTargetFramework Condition="'$(TargetGroup)' == 'netstandard1.1'">netstandard1.1;portable-net45+win8+wpa81</PackageTargetFramework>
-    <Configurations>netstandard-Debug;netstandard-Release;netstandard1.0-Debug;netstandard1.0-Release;netstandard1.1-Debug;netstandard1.1-Release</Configurations>
+    <Configurations>netcoreapp-Debug;netcoreapp-Release;netcoreapp3.0-Debug;netcoreapp3.0-Release;netstandard-Debug;netstandard-Release;netstandard1.0-Debug;netstandard1.0-Release;netstandard1.1-Debug;netstandard1.1-Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Base\DataflowBlock.cs" />
+    <Compile Include="Base\DataflowBlock.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Base\DataflowBlockOptions.cs" />
     <Compile Include="Base\DataflowLinkOptions.cs" />
     <Compile Include="Base\DataflowMessageHeader.cs" />
@@ -19,6 +20,7 @@
     <Compile Include="Base\ISourceBlock.cs" />
     <Compile Include="Base\ITargetBlock.cs" />
     <Compile Include="Blocks\ActionBlock.cs" />
+    <Compile Include="Internal\AsyncEnumerable.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Blocks\BatchBlock.cs" />
     <Compile Include="Blocks\BatchedJoinBlock.cs" />
     <Compile Include="Blocks\BatchedJoinManyBlock.cs" />
@@ -28,6 +30,7 @@
     <Compile Include="Blocks\JoinManyBlock.cs" />
     <Compile Include="Blocks\TransformBlock.cs" />
     <Compile Include="Blocks\TransformManyBlock.cs" />
+    <Compile Include="Blocks\TransformManyBlock.netcoreapp.cs" Condition="'$(TargetsNetCoreApp)' == 'true'" />
     <Compile Include="Blocks\WriteOnceBlock.cs" />
     <Compile Include="Internal\ActionOnDispose.cs" />
     <Compile Include="Internal\Common.cs" />
@@ -77,5 +80,10 @@
     <Reference Include="System.Runtime.Serialization.Primitives" />
     <Reference Include="System.Threading" />
     <Reference Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetsNetCoreApp)' == 'true'">
+    <Reference Include="System.Threading.Thread" />
+    <Reference Include="System.Threading.ThreadPool" />
+    <Reference Include="System.Threading.Timer" />
   </ItemGroup>
 </Project>
