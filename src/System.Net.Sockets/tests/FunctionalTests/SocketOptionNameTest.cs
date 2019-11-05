@@ -65,7 +65,6 @@ namespace System.Net.Sockets.Tests
             }
         }
 
-        [ActiveIssue(31609, TargetFrameworkMonikers.Uap)]
         [ConditionalFact(typeof(PlatformDetection), nameof(PlatformDetection.IsNotWindowsNanoServer))] // Skip on Nano: dotnet/corefx #29929
         public async Task MulticastInterface_Set_AnyInterface_Succeeds()
         {
@@ -75,7 +74,6 @@ namespace System.Net.Sockets.Tests
 
         [ConditionalFact(typeof(PlatformDetection), nameof(PlatformDetection.IsNotWindowsNanoServer))] // Skip on Nano: dotnet/corefx #29929
         [PlatformSpecific(TestPlatforms.Windows)] // see comment below
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap)] // UWP Apps are normally blocked to send network traffic on loopback.
         public async Task MulticastInterface_Set_Loopback_Succeeds()
         {
             // On Windows, we can apparently assume interface 1 is "loopback." On other platforms, this is not a
@@ -130,7 +128,6 @@ namespace System.Net.Sockets.Tests
             }
         }
 
-        [ActiveIssue(31609, TargetFrameworkMonikers.Uap)]
         [ConditionalFact(typeof(PlatformDetection), nameof(PlatformDetection.IsNotWindowsNanoServer))] // Skip on Nano: dotnet/corefx #29929
         [PlatformSpecific(~TestPlatforms.OSX)]
         public async Task MulticastInterface_Set_IPv6_AnyInterface_Succeeds()
@@ -190,7 +187,6 @@ namespace System.Net.Sockets.Tests
 
         [ConditionalFact(typeof(PlatformDetection), nameof(PlatformDetection.IsNotWindowsNanoServer))] // Skip on Nano: dotnet/corefx #29929
         [PlatformSpecific(TestPlatforms.Windows)]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap)] // UWP Apps are normally blocked to send network traffic on loopback.
         public async Task MulticastInterface_Set_IPv6_Loopback_Succeeds()
         {
             // On Windows, we can apparently assume interface 1 is "loopback." On other platforms, this is not a
@@ -429,7 +425,7 @@ namespace System.Net.Sockets.Tests
                 a.ExclusiveAddressUse = true;
 
                 a.Bind(new IPEndPoint(IPAddress.Loopback, 0));
-                a.Listen(10);
+                a.Listen();
                 int port = (a.LocalEndPoint as IPEndPoint).Port;
 
                 using (Socket b = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
@@ -535,7 +531,7 @@ namespace System.Net.Sockets.Tests
             {
                 a.Bind(new IPEndPoint(IPAddress.Loopback, 0));
                 port = (a.LocalEndPoint as IPEndPoint).Port;
-                a.Listen(10);
+                a.Listen();
 
                 // Connect a client
                 using (Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))

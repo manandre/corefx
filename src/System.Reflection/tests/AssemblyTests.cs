@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection.Tests;
 using System.Runtime.CompilerServices;
 using System.Security;
+using System.Text;
 using Xunit;
 
 [assembly:
@@ -144,8 +145,7 @@ namespace System.Reflection.Tests
         {
             Assert.NotNull(Assembly.GetEntryAssembly());
             string assembly = Assembly.GetEntryAssembly().ToString();
-            bool correct = assembly.IndexOf("xunit.console", StringComparison.OrdinalIgnoreCase) != -1 ||
-                           assembly.IndexOf("Microsoft.DotNet.XUnitRunnerUap", StringComparison.OrdinalIgnoreCase) != -1;
+            bool correct = assembly.IndexOf("xunit.console", StringComparison.OrdinalIgnoreCase) != -1;
             Assert.True(correct, $"Unexpected assembly name {assembly}");
         }
 
@@ -287,7 +287,6 @@ namespace System.Reflection.Tests
         }
 
         [Fact]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap, "Assembly.LoadFile() not supported on UWP")]
         public void LoadFile()
         {
             Assembly currentAssembly = typeof(AssemblyTests).Assembly;
@@ -314,17 +313,48 @@ namespace System.Reflection.Tests
         }
 
         [Fact]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap)]
         public void LoadFile_NullPath_Netcore_ThrowsArgumentNullException()
         {
             AssertExtensions.Throws<ArgumentNullException>("path", () => Assembly.LoadFile(null));
         }
 
         [Fact]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap, "Assembly.LoadFile() not supported on UWP")]
         public void LoadFile_NoSuchPath_ThrowsArgumentException()
         {
             AssertExtensions.Throws<ArgumentException>("path", null, () => Assembly.LoadFile("System.Runtime.Tests.dll"));
+        }
+
+        // This test should apply equally to Unix, but this reliably hits a particular one of the
+        // myriad ways that assembly load can fail
+        [Fact]
+        [PlatformSpecific(TestPlatforms.Windows)]
+        public void LoadFile_ValidPEBadIL_ThrowsBadImageFormatExceptionWithPath()
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "kernelbase.dll");
+            if (!File.Exists(path))
+                return;
+
+            AssertExtensions.ThrowsContains<BadImageFormatException>(() => Assembly.LoadFile(path), path);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(5)]
+        [InlineData(50)]
+        [InlineData(100)]
+        // Higher numbers hit some codepaths that currently don't include the path in the exception message
+        public void LoadFile_ValidPEBadIL_ThrowsBadImageFormatExceptionWithPath(int seek)
+        {
+            ReadOnlySpan<byte> garbage = Encoding.UTF8.GetBytes(new string('X', 500));
+            string path = GetTestFilePath();
+            File.Copy(SourceTestAssemblyPath, path);
+            using (var fs = new FileStream(path, FileMode.Open))
+            {
+                fs.Position = seek;
+                fs.Write(garbage);
+            }
+
+            AssertExtensions.ThrowsContains<BadImageFormatException>(() => Assembly.LoadFile(path), path);
         }
 
         [Fact]
@@ -611,7 +641,6 @@ namespace System.Reflection.Tests
         }
 
         [Fact]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap, "Assembly.Load(byte[]) not supported on UWP")]
         public void AssemblyLoadFromBytes()
         {
             Assembly assembly = typeof(AssemblyTests).Assembly;
@@ -623,7 +652,6 @@ namespace System.Reflection.Tests
         }
 
         [Fact]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap, "Assembly.Load(byte[]) not supported on UWP")]
         public void AssemblyLoadFromBytesNeg()
         {
             Assert.Throws<ArgumentNullException>(() => Assembly.Load((byte[])null));
@@ -631,7 +659,6 @@ namespace System.Reflection.Tests
         }
 
         [Fact]
-        [SkipOnTargetFramework(TargetFrameworkMonikers.Uap, "Assembly.Load(byte[]) not supported on UWP")]
         public void AssemblyLoadFromBytesWithSymbols()
         {
             Assembly assembly = typeof(AssemblyTests).Assembly;
