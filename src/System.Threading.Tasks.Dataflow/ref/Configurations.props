@@ -3,9 +3,8 @@
     <BuildConfigurations>
       netstandard1.0;
       netstandard1.1;
-      netstandard;
-      netcoreapp3.0;
-      netcoreapp;
+      netstandard2.0;
+      netstandard2.1;
     </BuildConfigurations>
   </PropertyGroup>
 </Project>

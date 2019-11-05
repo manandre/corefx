@@ -4,7 +4,6 @@
       netcoreapp;
       netcoreapp3.0;
       netfx;
-      uap;
     </BuildConfigurations>
   </PropertyGroup>
 </Project>
